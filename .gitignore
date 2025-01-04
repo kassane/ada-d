@@ -1,0 +1,17 @@
+.dub
+docs.json
+__dummy.html
+docs/
+build/
+/ada-d
+ada-d.so
+ada-d.dylib
+ada-d.dll
+ada-d.a
+ada-d.lib
+ada-d-test-*
+*.exe
+*.pdb
+*.o
+*.obj
+*.lst

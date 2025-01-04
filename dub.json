@@ -1,0 +1,58 @@
+{
+	"name": "ada-d",
+	"version": "1.0.0",
+	"authors": [
+		"Matheus Catarino França"
+	],
+	"description": "D bindings for Ada URL parser",
+	"license": "Apache-2.0",
+	"targetPath": "build",
+	"buildTypes": {
+		"debug": {
+			"buildOptions": [
+				"debugMode",
+				"debugInfo"
+			]
+		},
+		"release": {
+			"buildOptions": [
+				"releaseMode",
+				"optimize",
+				"inline"
+			]
+		}
+	},
+	"dflags-ldc": [
+		"--verrors-context",
+		"-preview=dip1000",
+		"-preview=in",
+		"-preview=rvaluerefparam"
+	],
+	"dflags-dmd": [
+		"-verrors=context",
+		"-preview=dip1000",
+		"-preview=in",
+		"-preview=rvaluerefparam"
+	],
+	"configurations": [
+		{
+			"name": "default",
+			"sourceFiles": [
+				"source/package.d"
+			],
+			"libs": [
+				"ada"
+			],
+			"targetType": "library"
+		},
+		{
+			"name": "unittest",
+			"sourceFiles": [
+				"source/package.d"
+			],
+			"libs": [
+				"ada"
+			]
+		}
+	]
+}
