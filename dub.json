@@ -39,8 +39,8 @@
 	"dflags-dmd": [
 		"-verrors=context"
 	],
-	"preGenerateCommands-linux": [
-		"export LD_LIBRARY_PATH=$PACKAGE_DIR/build"
+	"postBuildCommands-linux": [
+		"export PATH=$PATH:$PACKAGE_DIR/build"
 	],
 	"preBuildCommands-posix": [
 		"mkdir -p build",
@@ -51,12 +51,12 @@
 		"rm build/ada.o ada.cpp ada.h"
 	],
 	"preBuildCommands-windows": [
-		"mkdir build",
+		"powershell -Command \"mkdir -Force build\"",
 		"powershell -Command \"(New-Object Net.WebClient).DownloadFile('https://github.com/ada-url/ada/releases/download/v2.9.2/ada.cpp', 'ada.cpp')\"",
 		"powershell -Command \"(New-Object Net.WebClient).DownloadFile('https://github.com/ada-url/ada/releases/download/v2.9.2/ada.h', 'ada.h')\"",
 		"cl.exe /c /O2 /std:c++latest /Fo:build\\ada.obj ada.cpp",
 		"link.exe /DLL /OUT:build\\ada.dll build\\ada.obj",
-		"del build\\ada.obj ada.cpp ada.h"
+		"powershell -Command \"Remove-Item build\\ada.obj, ada.cpp, ada.h\""
 	],
 	"configurations": [
 		{
