@@ -30,7 +30,7 @@ public import c.wrapper;
 @("Simple URL parser user-friendly API")
 @nogc nothrow unittest
 {
-    import core.stdc.string : strlen;
+    import core.stdc.string : strlen; // @system
     import c.ada;
 
     // Test ada_parse
@@ -42,9 +42,9 @@ public import c.wrapper;
 }
 
 @("Search params parser key-value pair")
-unittest
+nothrow unittest
 {
-    import core.stdc.string : strlen;
+    import core.stdc.string : strlen; // @system
     import c.ada;
 
     const(char)* input = "a=b&c=d&c=e&f=g";
@@ -118,7 +118,7 @@ unittest
 }
 
 @("Wrapped API")
-unittest
+@safe nothrow unittest
 {
     // Test parsing a URL
     auto url = AdaUrl(ParseOptions("https://example.com/path?query=value#hash"));
