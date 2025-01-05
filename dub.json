@@ -26,7 +26,7 @@
 		"-L$PACKAGE_DIR/build"
 	],
 	"lflags-windows": [
-		"/LIBPATH:$PACKAGE_DIR\\lib"
+		"/LIBPATH:$PACKAGE_DIR\\build"
 	],
 	"dflags": [
 		"-preview=dip1000",
