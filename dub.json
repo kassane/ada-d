@@ -52,8 +52,7 @@
 			],
 			"libs": [
 				"ada"
-			],
-			"targetType": "executable"
+			]
 		},
 		{
 			"name": "benchmark",

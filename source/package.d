@@ -127,7 +127,7 @@ nothrow unittest
     assert(url.getProtocol() == "https:");
     assert(url.getHost() == "example.com");
     assert(url.getPathname() == "/path");
-    assert(url.getSearch() == "?query=value");
+    assert(url.getSearch().toString().str_convert() == "query=value");
     assert(url.getHash() == "#hash");
 
     // Test setting URL components
@@ -138,7 +138,7 @@ nothrow unittest
     url.setPathname("/new-path");
     assert(url.getPathname() == "/new-path");
     url.setSearch("?new=value");
-    assert(url.getSearch() == "?new=value");
+    assert(url.getSearch().toString().str_convert() == "new=value");
     url.setHash("#new-hash");
     assert(url.getHash() == "#new-hash");
 
@@ -156,6 +156,6 @@ nothrow unittest
     assert(relativeUrl.getProtocol() == "https:");
     assert(relativeUrl.getHost() == "example.com");
     assert(relativeUrl.getPathname() == "/relative/path");
-    assert(relativeUrl.getSearch() == "?query=value");
+    assert(relativeUrl.getSearch().toString().str_convert() == "query=value");
     assert(relativeUrl.getHash() == "#hash");
 }
