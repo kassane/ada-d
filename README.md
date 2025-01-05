@@ -1,6 +1,6 @@
 # ada-d
 
-D bindings for Ada URL parser
+D bindings for [Ada URL parser](https://github.com/ada-url)
 
 The Ada library passes the full range of tests from the specification, across a wide range of platforms (e.g., Windows, Linux, macOS).
 It fully supports the relevant [Unicode Technical Standard](https://www.unicode.org/reports/tr46/#ToUnicode).
@@ -8,7 +8,7 @@ It fully supports the relevant [Unicode Technical Standard](https://www.unicode.
 ## Requirements
 
 * [D](https://dlang.org/) toolchain
-* [Ada-URL](https://github.com/ada-url/ada/releases) library
+* C++ toolchain (system default)
 
 ## Usage
 
