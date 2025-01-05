@@ -30,6 +30,9 @@ jobs:
       - uses: dlang-community/setup-dlang@v2
         with:
           compiler: ${{matrix.compiler}}
+      - uses: egor-tensin/vs-shell@v2
+        with:
+          arch: x64
       - name: Build
         run: dub build
       - name: Test

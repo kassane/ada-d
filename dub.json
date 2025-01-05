@@ -39,7 +39,10 @@
 	"dflags-dmd": [
 		"-verrors=context"
 	],
-	"preGenerateCommands-posix": [
+	"preBuildCommands-linux": [
+		"export LD_LIBRARY_PATH=$PACKAGE_DIR/build"
+	],
+	"preBuildCommands-posix": [
 		"mkdir -p build",
 		"curl -sLO https://github.com/ada-url/ada/releases/download/v2.9.2/ada.cpp",
 		"curl -sLO https://github.com/ada-url/ada/releases/download/v2.9.2/ada.h",
@@ -47,12 +50,12 @@
 		"g++ -shared -o build/libada.so build/ada.o",
 		"rm build/ada.o ada.cpp ada.h"
 	],
-	"preGenerateCommands-windows": [
+	"preBuildCommands-windows": [
 		"mkdir build",
 		"powershell -Command \"(New-Object Net.WebClient).DownloadFile('https://github.com/ada-url/ada/releases/download/v2.9.2/ada.cpp', 'ada.cpp')\"",
 		"powershell -Command \"(New-Object Net.WebClient).DownloadFile('https://github.com/ada-url/ada/releases/download/v2.9.2/ada.h', 'ada.h')\"",
-		"powershell -Command \"& 'C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\Community\\Common7\\Tools\\VsDevCmd.bat' ; cl /c /O2 /std:c++latest /Fo:build\\ada.obj ada.cpp\"",
-		"powershell -Command \"& 'C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\Community\\Common7\\Tools\\VsDevCmd.bat' ; link /DLL /OUT:lib\\ada.dll build\\ada.obj\"",
+		"cl.exe /c /O2 /std:c++latest /Fo:build\\ada.obj ada.cpp",
+		"link.exe /DLL /OUT:lib\\ada.dll build\\ada.obj",
 		"del build\\ada.obj ada.cpp ada.h"
 	],
 	"configurations": [
