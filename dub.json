@@ -52,7 +52,21 @@
 			],
 			"libs": [
 				"ada"
-			]
+			],
+			"targetType": "executable"
+		},
+		{
+			"name": "benchmark",
+			"importPaths": [
+				"source"
+			],
+			"sourceFiles": [
+				"bench/bench.d"
+			],
+			"libs": [
+				"ada"
+			],
+			"targetType": "executable"
 		}
 	]
 }

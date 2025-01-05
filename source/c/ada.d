@@ -132,7 +132,7 @@ module c.ada;
     }
 
     alias ada_url_search_params_entries_iter = void*;
-    ada_url_search_params_keys_iter ada_parse_search_params(scope const(char)* input, ulong length) @trusted;
+    ada_url_search_params ada_parse_search_params(scope const(char)* input, ulong length) @trusted;
     void ada_free_search_params(scope ada_url_search_params result) @trusted;
 
     ulong ada_search_params_size(scope ada_url_search_params result) @trusted;

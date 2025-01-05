@@ -21,10 +21,6 @@ private import c.ada;
 
 struct AdaUrl
 {
-private:
-    ada_url _url;
-public:
-
     this(ParseOptions options) nothrow
     {
 
@@ -97,9 +93,14 @@ public:
         return str_convert(str);
     }
 
-    string getSearch() nothrow
+    SearchParams getSearch() nothrow
     {
-        auto str = ada_get_search(_url);
+        return SearchParams(ada_get_search(_url));
+    }
+
+    string getSearchParams(SearchParams search) nothrow
+    {
+        auto str = search.toString();
         return str_convert(str);
     }
 
@@ -233,6 +234,8 @@ public:
     {
         return ada_get_components(_url);
     }
+
+    private ada_url _url;
 }
 
 struct ParseOptions
@@ -253,6 +256,134 @@ struct ParseOptions
     }
 
     private ada_url _url;
+}
+
+struct SearchParams
+{
+    this(ada_string input) nothrow
+    {
+        _str = input;
+        _params = ada_parse_search_params(_str.data, _str.length);
+    }
+
+    ~this() nothrow
+    {
+        ada_free_search_params_keys_iter(keys);
+        ada_free_search_params_values_iter(values);
+        ada_free_search_params_entries_iter(entries);
+        ada_free_search_params(_params);
+    }
+
+    void append(string key, string value) nothrow
+    {
+        ada_search_params_append(_params, &key[0], key.length, &value[0], value.length);
+    }
+
+    ada_owned_string toString() nothrow
+    {
+        return ada_search_params_to_string(_params);
+    }
+
+    ada_string get(string key) nothrow
+    {
+        return ada_search_params_get(_params, &key[0], key.length);
+    }
+
+    @property ada_url_search_params_keys_iter keys() nothrow
+    {
+        return ada_search_params_get_keys(_params);
+    }
+
+    @property ada_url_search_params_values_iter values() nothrow
+    {
+        return ada_search_params_get_values(_params);
+    }
+
+    @property ada_url_search_params_entries_iter entries() nothrow
+    {
+        return ada_search_params_get_entries(_params);
+    }
+
+    Strings getAll(string key) nothrow
+    {
+        return Strings(ada_search_params_get_all(_params, &key[0], key.length));
+    }
+
+    bool has(string key) nothrow
+    {
+        return ada_search_params_has(_params, &key[0], key.length);
+    }
+
+    bool hasValue(string key, string value) nothrow
+    {
+        return ada_search_params_has_value(_params, &key[0], key.length, &value[0], value.length);
+    }
+
+    size_t length() nothrow
+    {
+        return ada_search_params_size(_params);
+    }
+
+    void reset() nothrow
+    {
+        ada_search_params_reset(_params, _str.data, _str.length);
+    }
+
+    void remove(string key) nothrow
+    {
+        ada_search_params_remove(_params, &key[0], key.length);
+    }
+
+    void removeValue(string key, string value) nothrow
+    {
+        ada_search_params_remove_value(_params, &key[0], key.length, &value[0], value.length);
+    }
+
+    void set(string key, string value) nothrow
+    {
+        ada_search_params_set(_params, &key[0], key.length, &value[0], value.length);
+    }
+
+    void sort() nothrow
+    {
+        ada_search_params_sort(_params);
+    }
+
+    private
+    {
+        ada_url_search_params _params;
+        ada_string _str;
+    }
+}
+
+struct Strings
+{
+    this(ada_strings input) nothrow
+    {
+        _str = input;
+    }
+
+    ~this() nothrow
+    {
+        ada_free_strings(_str);
+    }
+
+    string getStr(size_t index) nothrow
+    {
+        return str_convert(ada_strings_get(_str, index));
+    }
+
+    ada_string getData(size_t index) nothrow
+    {
+        return ada_strings_get(_str, index);
+    }
+
+    size_t length() nothrow
+    {
+        return ada_strings_size(_str);
+    }
+
+    private ada_strings _str;
 }
 
 string str_convert(T)(T str) @trusted
