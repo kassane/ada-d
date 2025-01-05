@@ -32,3 +32,9 @@ jobs:
           compiler: ${{matrix.compiler}}
       - name: Build
         run: dub build
+      - name: Test
+        run: dub test
+      - name: run Bench
+        run: |
+          dub -b release -c benchmark
+          dub -b release -c benchmark -- $PWD/bench/urls.txt
