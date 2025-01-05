@@ -22,26 +22,44 @@
 			]
 		}
 	},
-	"dflags-ldc": [
-		"--verrors-context",
+	"lflags-posix": [
+		"-L$PACKAGE_DIR/build"
+	],
+	"lflags-windows": [
+		"/LIBPATH:$PACKAGE_DIR\\build"
+	],
+	"dflags": [
 		"-preview=dip1000",
 		"-preview=in",
 		"-preview=rvaluerefparam"
 	],
+	"dflags-ldc": [
+		"--verrors-context"
+	],
 	"dflags-dmd": [
-		"-verrors=context",
-		"-preview=dip1000",
-		"-preview=in",
-		"-preview=rvaluerefparam"
+		"-verrors=context"
+	],
+	"preBuildCommands-posix": [
+		"mkdir -p build",
+		"curl -sLO https://github.com/ada-url/ada/releases/download/v2.9.2/ada.cpp",
+		"curl -sLO https://github.com/ada-url/ada/releases/download/v2.9.2/ada.h",
+		"g++ -O3 -fPIC -std=c++17 -c -o build/ada.o ada.cpp",
+		"g++ -shared -o build/libada.so build/ada.o",
+		"rm build/ada.o ada.cpp ada.h"
+	],
+	"preBuildCommands-windows": [
+		"powershell -Command \"mkdir -Force build\"",
+		"powershell -Command \"(New-Object Net.WebClient).DownloadFile('https://github.com/ada-url/ada/releases/download/v2.9.2/ada.cpp', 'ada.cpp')\"",
+		"powershell -Command \"(New-Object Net.WebClient).DownloadFile('https://github.com/ada-url/ada/releases/download/v2.9.2/ada.h', 'ada.h')\"",
+		"cl.exe /c /O2 /std:c++latest /Fo:build\\ada.obj ada.cpp",
+		"lib.exe /OUT:build\\ada.lib build\\ada.obj",
+		"powershell -Command \"Remove-Item build\\ada.obj, ada.cpp, ada.h\""
 	],
 	"configurations": [
 		{
 			"name": "default",
 			"sourceFiles": [
 				"source/package.d"
-			],
-			"libs": [
-				"ada"
 			],
 			"targetType": "library"
 		},

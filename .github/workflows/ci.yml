@@ -30,5 +30,17 @@ jobs:
       - uses: dlang-community/setup-dlang@v2
         with:
           compiler: ${{matrix.compiler}}
+      - uses: egor-tensin/vs-shell@v2
+        with:
+          arch: x64
       - name: Build
         run: dub build
+      - name: Linux LD_PATH
+        if: ${{ matrix.os == 'ubuntu-latest' }}
+        run: sudo cp $PWD/build/libada.so /usr/lib
+      - name: Test
+        run: dub test
+      - name: run Bench
+        run: |
+          dub -b release -c benchmark
+          dub -b release -c benchmark -- $PWD/bench/urls.txt
