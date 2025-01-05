@@ -7,14 +7,14 @@ It fully supports the relevant [Unicode Technical Standard](https://www.unicode.
 
 ## Requirements
 
-* [D](https://dlang.org/) compiler
+* [D](https://dlang.org/) toolchain
 * [Ada-URL](https://github.com/ada-url/ada/releases) library
 
 ## Usage
 
 See [here](source/package.d) unittests for make a usage example.
-You can run it locally with `dub test` or `dub -c benchmark` to run benchmarks.
-Feel free to adjust it for exploring this crate further.
+You can run it locally with `dub test` or `dub -c benchmark` to run benchmark (see: [here](bench/bench.d)).
+Feel free to adjust it for exploring this project.
 
 ## Acknowledgements
 - [Daniel Lemire](https://github.com/lemire)

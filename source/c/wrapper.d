@@ -185,6 +185,11 @@ struct AdaUrl
         ada_clear_search(_url);
     }
 
+    ada_url copy() nothrow
+    {
+        return ada_copy(_url);
+    }
+
     bool hasCredentials() nothrow
     {
         return ada_has_credentials(_url);
