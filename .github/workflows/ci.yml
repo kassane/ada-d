@@ -37,7 +37,7 @@ jobs:
         run: dub build
       - name: Linux PATH
         if: ${{ matrix.os == 'ubuntu-latest' }}
-        run: echo "$PWD/build" >> $GITHUB_PATH
+        run: sudo cp $PWD/build/libada.so /usr/local/lib
       - name: Test
         run: dub test
       - name: run Bench
