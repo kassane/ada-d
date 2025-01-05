@@ -52,7 +52,7 @@
 		"powershell -Command \"(New-Object Net.WebClient).DownloadFile('https://github.com/ada-url/ada/releases/download/v2.9.2/ada.cpp', 'ada.cpp')\"",
 		"powershell -Command \"(New-Object Net.WebClient).DownloadFile('https://github.com/ada-url/ada/releases/download/v2.9.2/ada.h', 'ada.h')\"",
 		"cl.exe /c /O2 /std:c++latest /Fo:build\\ada.obj ada.cpp",
-		"link.exe /OUT:build\\ada.lib build\\ada.obj",
+		"lib.exe /OUT:build\\ada.lib build\\ada.obj",
 		"powershell -Command \"Remove-Item build\\ada.obj, ada.cpp, ada.h\""
 	],
 	"configurations": [

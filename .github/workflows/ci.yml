@@ -35,7 +35,7 @@ jobs:
           arch: x64
       - name: Build
         run: dub build
-      - name: Linux PATH
+      - name: Linux LD_PATH
         if: ${{ matrix.os == 'ubuntu-latest' }}
         run: sudo cp $PWD/build/libada.so /usr/lib
       - name: Test
