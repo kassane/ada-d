@@ -51,8 +51,8 @@
 		"mkdir build",
 		"powershell -Command \"(New-Object Net.WebClient).DownloadFile('https://github.com/ada-url/ada/releases/download/v2.9.2/ada.cpp', 'ada.cpp')\"",
 		"powershell -Command \"(New-Object Net.WebClient).DownloadFile('https://github.com/ada-url/ada/releases/download/v2.9.2/ada.h', 'ada.h')\"",
-		"cl /c /O2 /std:c++latest /Fo:build\\ada.obj ada.cpp",
-		"link /DLL /OUT:lib\\ada.dll build\\ada.obj",
+		"cmd /c \"C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\Community\\Common7\\Tools\\VsDevCmd.bat\" && cl /c /O2 /std:c++latest /Fo:build\\ada.obj ada.cpp",
+		"cmd /c \"C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\Community\\Common7\\Tools\\VsDevCmd.bat\" && link /DLL /OUT:lib\\ada.dll build\\ada.obj",
 		"del build\\ada.obj ada.cpp ada.h"
 	],
 	"configurations": [
