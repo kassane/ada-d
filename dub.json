@@ -41,15 +41,17 @@
 	],
 	"preGenerateCommands-posix": [
 		"curl -sLO https://github.com/ada-url/ada/releases/download/v2.9.2/ada.cpp",
+		"curl -sLO https://github.com/ada-url/ada/releases/download/v2.9.2/ada.h",
 		"g++ -O3 -fPIC -std=c++17 -c -o build/ada.o ada.cpp",
 		"g++ -shared -o build/libada.so build/ada.o",
-		"rm build/ada.o ada.cpp"
+		"rm build/ada.o ada.cpp ada.h"
 	],
 	"preGenerateCommands-windows": [
 		"powershell -Command \"(New-Object Net.WebClient).DownloadFile('https://github.com/ada-url/ada/releases/download/v2.9.2/ada.cpp', 'ada.cpp')\"",
+		"powershell -Command \"(New-Object Net.WebClient).DownloadFile('https://github.com/ada-url/ada/releases/download/v2.9.2/ada.h', 'ada.h')\"",
 		"cl /c /O2 /std:c++latest /Fo:build\\ada.obj ada.cpp",
 		"link /DLL /OUT:lib\\ada.dll build\\ada.obj",
-		"del build\\ada.obj ada.cpp"
+		"del build\\ada.obj ada.cpp ada.h"
 	],
 	"configurations": [
 		{
