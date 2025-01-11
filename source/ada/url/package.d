@@ -31,7 +31,7 @@ public import ada.c.wrapper;
 @nogc nothrow unittest
 {
     import core.stdc.string : strlen; // @system
-    import c.ada;
+    import ada.c.ada;
 
     // Test ada_parse
     const(char)* input = "http://user:pass@example.com:8080/path/to/file.html?query=value#fragment";
@@ -45,7 +45,7 @@ public import ada.c.wrapper;
 nothrow @nogc unittest
 {
     import core.stdc.string : strlen; // @system
-    import c.ada;
+    import ada.c.ada;
 
     const(char)* input = "a=b&c=d&c=e&f=g";
     auto url = ada_parse_search_params(input, strlen(input));

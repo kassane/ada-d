@@ -1,4 +1,4 @@
-import c.wrapper : AdaUrl, ParseOptions; // @nogc, @safe, nothrow and betterC compatible
+import ada.url : AdaUrl, ParseOptions; // @nogc, @safe, nothrow and betterC compatible
 import std.stdio : writeln; // need GC and throw exception
 
 void main() @safe
