@@ -22,14 +22,14 @@ module c.ada;
     struct ada_string
     {
         const(char)* data = void;
-        ulong length = void;
+        size_t length = void;
     }
 
     /// string that must be freed by the caller
     struct ada_owned_string
     {
         const(char)* data = void;
-        ulong length = void;
+        size_t length = void;
     }
 
     struct ada_url_components
@@ -52,12 +52,12 @@ module c.ada;
 
     /// input should be a null terminated C string (ASCII or UTF-8)
     /// you must call ada_free on the returned pointer
-    ada_url ada_parse(scope const(char)* input, ulong length) @trusted;
-    ada_url ada_parse_with_base(scope const(char)* input, ulong input_length, scope const(char)* base, ulong base_length) @trusted;
+    ada_url ada_parse(scope const(char)* input, size_t length) @trusted;
+    ada_url ada_parse_with_base(scope const(char)* input, size_t input_length, scope const(char)* base, size_t base_length) @trusted;
 
     // input and base should be a null terminated C strings
-    bool ada_can_parse(scope const(char)* input, ulong length) @trusted;
-    bool ada_can_parse_with_base(scope const(char)* input, ulong input_length, scope const(char)* base, ulong base_length) @trusted;
+    bool ada_can_parse(scope const(char)* input, size_t length) @trusted;
+    bool ada_can_parse_with_base(scope const(char)* input, size_t input_length, scope const(char)* base, size_t base_length) @trusted;
     void ada_free(scope ada_url result) @trusted;
     void ada_free_owned_string(ada_owned_string owned) @trusted;
     ada_url ada_copy(scope ada_url input) @trusted;
@@ -82,16 +82,16 @@ module c.ada;
     /// url_aggregator setters
     /// if ada_is_valid(result)) is false, the setters have no effect
     /// input should be a null terminated C string
-    bool ada_set_href(scope ada_url result, scope const(char)* input, ulong length) @trusted;
-    bool ada_set_host(scope ada_url result, scope const(char)* input, ulong length) @trusted;
-    bool ada_set_hostname(scope ada_url result, scope const(char)* input, ulong length) @trusted;
-    bool ada_set_protocol(scope ada_url result, scope const(char)* input, ulong length) @trusted;
-    bool ada_set_username(scope ada_url result, scope const(char)* input, ulong length) @trusted;
-    bool ada_set_password(scope ada_url result, scope const(char)* input, ulong length) @trusted;
-    bool ada_set_port(scope ada_url result, scope const(char)* input, ulong length) @trusted;
-    bool ada_set_pathname(scope ada_url result, scope const(char)* input, ulong length) @trusted;
-    void ada_set_search(scope ada_url result, scope const(char)* input, ulong length) @trusted;
-    void ada_set_hash(scope ada_url result, scope const(char)* input, ulong length) @trusted;
+    bool ada_set_href(scope ada_url result, scope const(char)* input, size_t length) @trusted;
+    bool ada_set_host(scope ada_url result, scope const(char)* input, size_t length) @trusted;
+    bool ada_set_hostname(scope ada_url result, scope const(char)* input, size_t length) @trusted;
+    bool ada_set_protocol(scope ada_url result, scope const(char)* input, size_t length) @trusted;
+    bool ada_set_username(scope ada_url result, scope const(char)* input, size_t length) @trusted;
+    bool ada_set_password(scope ada_url result, scope const(char)* input, size_t length) @trusted;
+    bool ada_set_port(scope ada_url result, scope const(char)* input, size_t length) @trusted;
+    bool ada_set_pathname(scope ada_url result, scope const(char)* input, size_t length) @trusted;
+    void ada_set_search(scope ada_url result, scope const(char)* input, size_t length) @trusted;
+    void ada_set_hash(scope ada_url result, scope const(char)* input, size_t length) @trusted;
 
     /// url_aggregator clear methods
     void ada_clear_port(scope ada_url result) @trusted;
@@ -114,8 +114,8 @@ module c.ada;
     const(ada_url_components)* ada_get_components(scope ada_url result) @trusted;
 
     /// idna methods
-    ada_owned_string ada_idna_to_unicode(scope const(char)* input, ulong length) @trusted;
-    ada_owned_string ada_idna_to_ascii(scope const(char)* input, ulong length) @trusted;
+    ada_owned_string ada_idna_to_unicode(scope const(char)* input, size_t length) @trusted;
+    ada_owned_string ada_idna_to_ascii(scope const(char)* input, size_t length) @trusted;
 
     /// url search params
     alias ada_url_search_params = void*;
@@ -132,35 +132,35 @@ module c.ada;
     }
 
     alias ada_url_search_params_entries_iter = void*;
-    ada_url_search_params ada_parse_search_params(scope const(char)* input, ulong length) @trusted;
+    ada_url_search_params ada_parse_search_params(scope const(char)* input, size_t length) @trusted;
     void ada_free_search_params(scope ada_url_search_params result) @trusted;
 
-    ulong ada_search_params_size(scope ada_url_search_params result) @trusted;
+    size_t ada_search_params_size(scope ada_url_search_params result) @trusted;
     void ada_search_params_sort(scope ada_url_search_params result) @trusted;
     ada_owned_string ada_search_params_to_string(scope ada_url_search_params result) @trusted;
 
-    void ada_search_params_append(scope ada_url_search_params result, scope const(char)* key, ulong key_length, scope const(
-            char)* value, ulong value_length) @trusted;
-    void ada_search_params_set(scope ada_url_search_params result, scope const(char)* key, ulong key_length, scope const(
-            char)* value, ulong value_length) @trusted;
-    void ada_search_params_remove(scope ada_url_search_params result, scope const(char)* key, ulong key_length) @trusted;
-    void ada_search_params_remove_value(scope ada_url_search_params result, scope const(char)* key, ulong key_length, const(
-            char)* value, ulong value_length) @trusted;
-    bool ada_search_params_has(scope ada_url_search_params result, scope const(char)* key, ulong key_length) @trusted;
-    bool ada_search_params_has_value(scope ada_url_search_params result, scope const(char)* key, ulong key_length, scope const(
-            char)* value, ulong value_length) @trusted;
-    ada_string ada_search_params_get(scope ada_url_search_params result, scope const(char)* key, ulong key_length) @trusted;
+    void ada_search_params_append(scope ada_url_search_params result, scope const(char)* key, size_t key_length, scope const(
+            char)* value, size_t value_length) @trusted;
+    void ada_search_params_set(scope ada_url_search_params result, scope const(char)* key, size_t key_length, scope const(
+            char)* value, size_t value_length) @trusted;
+    void ada_search_params_remove(scope ada_url_search_params result, scope const(char)* key, size_t key_length) @trusted;
+    void ada_search_params_remove_value(scope ada_url_search_params result, scope const(char)* key, size_t key_length, const(
+            char)* value, size_t value_length) @trusted;
+    bool ada_search_params_has(scope ada_url_search_params result, scope const(char)* key, size_t key_length) @trusted;
+    bool ada_search_params_has_value(scope ada_url_search_params result, scope const(char)* key, size_t key_length, scope const(
+            char)* value, size_t value_length) @trusted;
+    ada_string ada_search_params_get(scope ada_url_search_params result, scope const(char)* key, size_t key_length) @trusted;
     ada_strings ada_search_params_get_all(scope ada_url_search_params result, scope const(
-            char)* key, ulong key_length) @trusted;
-    void ada_search_params_reset(scope ada_url_search_params result, scope const(char)* input, ulong length) @trusted;
+            char)* key, size_t key_length) @trusted;
+    void ada_search_params_reset(scope ada_url_search_params result, scope const(char)* input, size_t length) @trusted;
     ada_url_search_params_keys_iter ada_search_params_get_keys(scope ada_url_search_params result) @trusted;
     ada_url_search_params_values_iter ada_search_params_get_values(scope ada_url_search_params result) @trusted;
     ada_url_search_params_entries_iter ada_search_params_get_entries(
         scope ada_url_search_params result) @trusted;
 
     void ada_free_strings(scope ada_strings result) @trusted;
-    ulong ada_strings_size(scope ada_strings result) @trusted;
-    ada_string ada_strings_get(scope ada_strings result, ulong index) @trusted;
+    size_t ada_strings_size(scope ada_strings result) @trusted;
+    ada_string ada_strings_get(scope ada_strings result, size_t index) @trusted;
 
     void ada_free_search_params_keys_iter(scope ada_url_search_params_keys_iter result) @trusted;
     ada_string ada_search_params_keys_iter_next(scope ada_url_search_params_keys_iter result) @trusted;
