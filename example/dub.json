@@ -4,10 +4,7 @@
 	],
 	"copyright": "Copyright © 2025, Matheus Catarino França",
 	"dependencies": {
-		"ada-d": {
-			"repository": "git+https://github.com/kassane/ada-d.git",
-			"version": "ccaa8c40ec3e8af554c03248c9d8096567bab584"
-		}
+		"ada-d": "~>1.0.3"
 	},
 	"description": "Ada-url example",
 	"license": "Apache-2.0",
