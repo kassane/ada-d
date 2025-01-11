@@ -1,6 +1,6 @@
 module bench.bench;
 import std.algorithm : count, filter, map, sum;
-import std.array : split;
+import std.array : array, split;
 import std.datetime.stopwatch : StopWatch, AutoStart, Duration;
 import std.file : exists, readText;
 import std.format : format;
@@ -9,7 +9,7 @@ import ada_url;
 
 @safe:
 
-immutable string[] urlExamples = [
+immutable string[11] urlExamples = [
     "https://www.google.com/webhp?hl=en&ictx=2&sa=X&ved=0ahUKEwil_oSxzJj8AhVtEFkFHTHnCGQQPQgI",
     "https://support.google.com/websearch/?p=ws_results_help&hl=en-CA&fg=1",
     "https://en.wikipedia.org/wiki/Dog#Roles_with_humans",
@@ -33,7 +33,7 @@ struct BenchmarkData
         if (!filename.exists)
         {
             stderr.writeln("File not found: ", filename);
-            return BenchmarkData(urlExamples, urlExamples.map!(s => s.length).sum);
+            return BenchmarkData(urlExamples, urlExamples.array.map!(s => s.length).sum);
         }
 
         auto urls = filename.readText.split;
@@ -42,7 +42,7 @@ struct BenchmarkData
 
     static BenchmarkData defaultData()
     {
-        return BenchmarkData(urlExamples, urlExamples.map!(s => s.length).sum);
+        return BenchmarkData(urlExamples, urlExamples.array.map!(s => s.length).sum);
     }
 
     size_t countInvalidUrls() const @trusted
