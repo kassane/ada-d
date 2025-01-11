@@ -1,11 +1,11 @@
-module bench.bench;
+module bench;
 import std.algorithm : count, filter, map, sum;
 import std.array : array, split;
 import std.datetime.stopwatch : StopWatch, AutoStart, Duration;
 import std.file : exists, readText;
 import std.format : format;
 import std.stdio : stderr, writeln, writefln;
-import ada_url;
+import ada.url;
 
 @safe:
 

@@ -59,7 +59,7 @@
 		{
 			"name": "build-library",
 			"sourceFiles": [
-				"source/package.d"
+				"source/ada/url/package.d"
 			],
 			"libs": [
 				"ada"
@@ -69,7 +69,7 @@
 		{
 			"name": "unittest",
 			"sourceFiles": [
-				"source/package.d"
+				"source/ada/url/package.d"
 			],
 			"libs": [
 				"ada"
