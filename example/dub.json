@@ -6,8 +6,7 @@
 	"dependencies": {
 		"ada-d": {
 			"repository": "git+https://github.com/kassane/ada-d.git",
-			"branch": "reorder",
-			"version": "f5f0a5e1f69bf16919bce6bb307724c440a6a359"
+			"version": "ccaa8c40ec3e8af554c03248c9d8096567bab584"
 		}
 	},
 	"description": "Ada-url example",
