@@ -13,9 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-module c.wrapper;
+module ada.c.wrapper;
 
-private import c.ada;
+private import ada.c.ada;
 
 @safe:
 

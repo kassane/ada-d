@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-module c.ada;
+module ada.c.ada;
 
 @nogc nothrow @safe extern (C)
 {

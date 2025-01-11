@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-module ada_url;
+module ada.url;
 
 version (D_BetterC) // no DRT
 {
@@ -25,7 +25,7 @@ version (D_BetterC) // no DRT
     }
 }
 
-public import c.wrapper;
+public import ada.c.wrapper;
 
 @("Simple URL parser user-friendly API")
 @nogc nothrow unittest
@@ -42,7 +42,7 @@ public import c.wrapper;
 }
 
 @("Search params parser key-value pair")
-nothrow unittest
+nothrow @nogc unittest
 {
     import core.stdc.string : strlen; // @system
     import c.ada;
@@ -118,7 +118,7 @@ nothrow unittest
 }
 
 @("Wrapped API")
-@safe nothrow unittest
+@safe nothrow @nogc unittest
 {
     // Test parsing a URL
     auto url = AdaUrl(ParseOptions("https://example.com/path?query=value#hash"));

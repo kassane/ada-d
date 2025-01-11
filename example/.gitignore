@@ -1,0 +1,16 @@
+.dub
+docs.json
+__dummy.html
+docs/
+/ada-example
+ada-example.so
+ada-example.dylib
+ada-example.dll
+ada-example.a
+ada-example.lib
+ada-example-test-*
+*.exe
+*.pdb
+*.o
+*.obj
+*.lst
