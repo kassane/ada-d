@@ -12,7 +12,7 @@ It fully supports the relevant [Unicode Technical Standard](https://www.unicode.
 
 ## Usage
 
-See [here](source/package.d) unittests for make a usage example.
+See [here](source/ada/url/package.d) unittests for make a usage example.
 You can run it locally with `dub test` or `dub -c benchmark` to run benchmark (see: [here](bench/bench.d)).
 Feel free to adjust it for exploring this project.
 
