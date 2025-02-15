@@ -38,9 +38,6 @@ jobs:
           arch: x64
       - name: Build
         run: dub build
-      - name: Linux LD_PATH
-        if: ${{ startsWith(matrix.os, 'ubuntu') }}
-        run: sudo cp $PWD/build/libada.so /usr/lib
       - name: Test
         run: dub test
       - name: run Bench
