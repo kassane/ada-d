@@ -8,7 +8,7 @@ It fully supports the relevant [Unicode Technical Standard](https://www.unicode.
 ## Requirements
 
 * [D](https://dlang.org/) toolchain
-* C++ toolchain (system default)
+* C++20 toolchain (system default)
 
 ## Usage
 
