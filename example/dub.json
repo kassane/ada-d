@@ -4,7 +4,7 @@
 	],
 	"copyright": "Copyright © 2025, Matheus Catarino França",
 	"dependencies": {
-		"ada-d": "~>1.0.3"
+		"ada-d": "~>1.0.5"
 	},
 	"description": "Ada-url example",
 	"license": "Apache-2.0",

@@ -1,6 +1,6 @@
 {
 	"name": "ada-d",
-	"version": "1.0.4",
+	"version": "1.0.5",
 	"authors": [
 		"Matheus Catarino França"
 	],
@@ -35,6 +35,8 @@
 	],
 	"dflags": [
 		"-preview=dip1000",
+		"-preview=dip1008",
+		"-preview=fixAliasThis",
 		"-preview=in",
 		"-preview=rvaluerefparam",
 		"-extern-std=c++20"
@@ -47,24 +49,24 @@
 	],
 	"preBuildCommands-linux": [
 		"mkdir -p $PACKAGE_DIR/build",
-		"curl -sLO https://github.com/ada-url/ada/releases/download/v3.1.0/ada.cpp",
-		"curl -sLO https://github.com/ada-url/ada/releases/download/v3.1.0/ada.h",
+		"curl -sLO https://github.com/ada-url/ada/releases/download/v3.2.4/ada.cpp",
+		"curl -sLO https://github.com/ada-url/ada/releases/download/v3.2.4/ada.h",
 		"g++ -O3 -fPIC -std=c++20 -c -o $PACKAGE_DIR/build/ada.o $PACKAGE_DIR/ada.cpp",
 		"ar rcs $PACKAGE_DIR/build/libada.a $PACKAGE_DIR/build/ada.o",
 		"rm $PACKAGE_DIR/build/ada.o $PACKAGE_DIR/ada.cpp $PACKAGE_DIR/ada.h"
 	],
 	"preBuildCommands-osx": [
 		"mkdir -p $PACKAGE_DIR/build",
-		"curl -sLO https://github.com/ada-url/ada/releases/download/v3.1.0/ada.cpp",
-		"curl -sLO https://github.com/ada-url/ada/releases/download/v3.1.0/ada.h",
+		"curl -sLO https://github.com/ada-url/ada/releases/download/v3.2.4/ada.cpp",
+		"curl -sLO https://github.com/ada-url/ada/releases/download/v3.2.4/ada.h",
 		"clang++ -O3 -fPIC -std=c++20 -c -o $PACKAGE_DIR/build/ada.o $PACKAGE_DIR/ada.cpp",
 		"ar rcs $PACKAGE_DIR/build/libada.a $PACKAGE_DIR/build/ada.o",
 		"rm $PACKAGE_DIR/build/ada.o $PACKAGE_DIR/ada.cpp $PACKAGE_DIR/ada.h"
 	],
 	"preBuildCommands-windows": [
 		"powershell -Command \"mkdir -Force $PACKAGE_DIR\\build\"",
-		"powershell -Command \"(New-Object Net.WebClient).DownloadFile('https://github.com/ada-url/ada/releases/download/v3.1.0/ada.cpp', 'ada.cpp')\"",
-		"powershell -Command \"(New-Object Net.WebClient).DownloadFile('https://github.com/ada-url/ada/releases/download/v3.1.0/ada.h', 'ada.h')\"",
+		"powershell -Command \"(New-Object Net.WebClient).DownloadFile('https://github.com/ada-url/ada/releases/download/v3.2.4/ada.cpp', 'ada.cpp')\"",
+		"powershell -Command \"(New-Object Net.WebClient).DownloadFile('https://github.com/ada-url/ada/releases/download/v3.2.4/ada.h', 'ada.h')\"",
 		"cl.exe /c /O2 /std:c++latest /Fo:$PACKAGE_DIR\\build\\ada.obj $PACKAGE_DIR\\ada.cpp /nologo",
 		"lib.exe /OUT:$PACKAGE_DIR\\build\\ada.lib $PACKAGE_DIR\\build\\ada.obj",
 		"powershell -Command \"Remove-Item $PACKAGE_DIR\\build\\ada.obj, $PACKAGE_DIR\\ada.cpp, $PACKAGE_DIR\\ada.h\""
