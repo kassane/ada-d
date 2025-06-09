@@ -1,6 +1,6 @@
 {
 	"name": "ada-d",
-	"version": "1.0.5",
+	"version": "1.0.6",
 	"authors": [
 		"Matheus Catarino França"
 	],
@@ -22,18 +22,16 @@
 			]
 		}
 	},
-	"lflags-linux": [
-		"-L$PACKAGE_DIR/build",
-		"-lstdc++"
+	"dflags-gdc": [
+		"-fpreview=dip1000",
+		"-fpreview=dip1008",
+		"-fpreview=fixAliasThis",
+		"-fpreview=in",
+		"-fpreview=rvaluerefparam",
+		"-fextern-std=c++20"
 	],
-	"lflags-osx": [
-		"-L$PACKAGE_DIR/build",
-		"-lc++"
-	],
-	"lflags-windows": [
-		"/LIBPATH:$PACKAGE_DIR\\build"
-	],
-	"dflags": [
+	"dflags-ldc": [
+		"--verrors-context",
 		"-preview=dip1000",
 		"-preview=dip1008",
 		"-preview=fixAliasThis",
@@ -41,46 +39,115 @@
 		"-preview=rvaluerefparam",
 		"-extern-std=c++20"
 	],
-	"dflags-ldc": [
-		"--verrors-context"
-	],
 	"dflags-dmd": [
-		"-verrors=context"
-	],
-	"preBuildCommands-linux": [
-		"mkdir -p $PACKAGE_DIR/build",
-		"curl -sLO https://github.com/ada-url/ada/releases/download/v3.2.4/ada.cpp",
-		"curl -sLO https://github.com/ada-url/ada/releases/download/v3.2.4/ada.h",
-		"g++ -O3 -fPIC -std=c++20 -c -o $PACKAGE_DIR/build/ada.o $PACKAGE_DIR/ada.cpp",
-		"ar rcs $PACKAGE_DIR/build/libada.a $PACKAGE_DIR/build/ada.o",
-		"rm $PACKAGE_DIR/build/ada.o $PACKAGE_DIR/ada.cpp $PACKAGE_DIR/ada.h"
-	],
-	"preBuildCommands-osx": [
-		"mkdir -p $PACKAGE_DIR/build",
-		"curl -sLO https://github.com/ada-url/ada/releases/download/v3.2.4/ada.cpp",
-		"curl -sLO https://github.com/ada-url/ada/releases/download/v3.2.4/ada.h",
-		"clang++ -O3 -fPIC -std=c++20 -c -o $PACKAGE_DIR/build/ada.o $PACKAGE_DIR/ada.cpp",
-		"ar rcs $PACKAGE_DIR/build/libada.a $PACKAGE_DIR/build/ada.o",
-		"rm $PACKAGE_DIR/build/ada.o $PACKAGE_DIR/ada.cpp $PACKAGE_DIR/ada.h"
-	],
-	"preBuildCommands-windows": [
-		"powershell -Command \"mkdir -Force $PACKAGE_DIR\\build\"",
-		"powershell -Command \"(New-Object Net.WebClient).DownloadFile('https://github.com/ada-url/ada/releases/download/v3.2.4/ada.cpp', 'ada.cpp')\"",
-		"powershell -Command \"(New-Object Net.WebClient).DownloadFile('https://github.com/ada-url/ada/releases/download/v3.2.4/ada.h', 'ada.h')\"",
-		"cl.exe /c /O2 /std:c++latest /Fo:$PACKAGE_DIR\\build\\ada.obj $PACKAGE_DIR\\ada.cpp /nologo",
-		"lib.exe /OUT:$PACKAGE_DIR\\build\\ada.lib $PACKAGE_DIR\\build\\ada.obj",
-		"powershell -Command \"Remove-Item $PACKAGE_DIR\\build\\ada.obj, $PACKAGE_DIR\\ada.cpp, $PACKAGE_DIR\\ada.h\""
+		"-verrors=context",
+		"-preview=dip1000",
+		"-preview=dip1008",
+		"-preview=fixAliasThis",
+		"-preview=in",
+		"-preview=rvaluerefparam",
+		"-extern-std=c++20"
 	],
 	"configurations": [
 		{
-			"name": "build-library",
-			"sourceFiles": [
-				"source/ada/url/package.d"
+			"name": "native",
+			"libs-osx": [
+				"ada",
+				"c++"
 			],
+			"libs-linux": [
+				"ada",
+				"stdc++"
+			],
+			"libs-windows": [
+				"ada"
+			],
+			"lflags-posix": [
+				"-L$PACKAGE_DIR/build",
+			],
+			"lflags-windows": [
+				"/LIBPATH:$PACKAGE_DIR\\build"
+			],
+			"targetType": "library",
+			"preBuildCommands-linux": [
+				"mkdir -p $PACKAGE_DIR/build",
+				"curl -sLO https://github.com/ada-url/ada/releases/download/v3.2.4/ada.cpp",
+				"curl -sLO https://github.com/ada-url/ada/releases/download/v3.2.4/ada.h",
+				"g++ -O3 -fPIC -std=c++20 -c -o $PACKAGE_DIR/build/ada.o $PACKAGE_DIR/ada.cpp",
+				"ar rcs $PACKAGE_DIR/build/libada.a $PACKAGE_DIR/build/ada.o",
+				"rm $PACKAGE_DIR/build/ada.o $PACKAGE_DIR/ada.cpp $PACKAGE_DIR/ada.h"
+			],
+			"preBuildCommands-osx": [
+				"mkdir -p $PACKAGE_DIR/build",
+				"curl -sLO https://github.com/ada-url/ada/releases/download/v3.2.4/ada.cpp",
+				"curl -sLO https://github.com/ada-url/ada/releases/download/v3.2.4/ada.h",
+				"clang++ -O3 -fPIC -std=c++20 -c -o $PACKAGE_DIR/build/ada.o $PACKAGE_DIR/ada.cpp",
+				"ar rcs $PACKAGE_DIR/build/libada.a $PACKAGE_DIR/build/ada.o",
+				"rm $PACKAGE_DIR/build/ada.o $PACKAGE_DIR/ada.cpp $PACKAGE_DIR/ada.h"
+			],
+			"preBuildCommands-windows": [
+				"powershell -Command \"mkdir -Force $PACKAGE_DIR\\build\"",
+				"powershell -Command \"(New-Object Net.WebClient).DownloadFile('https://github.com/ada-url/ada/releases/download/v3.2.4/ada.cpp', 'ada.cpp')\"",
+				"powershell -Command \"(New-Object Net.WebClient).DownloadFile('https://github.com/ada-url/ada/releases/download/v3.2.4/ada.h', 'ada.h')\"",
+				"cl.exe /c /O2 /std:c++latest /Fo:$PACKAGE_DIR\\build\\ada.obj $PACKAGE_DIR\\ada.cpp /nologo",
+				"lib.exe /OUT:$PACKAGE_DIR\\build\\ada.lib $PACKAGE_DIR\\build\\ada.obj",
+				"powershell -Command \"Remove-Item $PACKAGE_DIR\\build\\ada.obj, $PACKAGE_DIR\\ada.cpp, $PACKAGE_DIR\\ada.h\""
+			]
+		},
+		{
+			"name": "wasm",
 			"libs": [
 				"ada"
 			],
-			"targetType": "library"
+			"targetType": "library",
+			"preBuildCommands-linux-x86_64": [
+				"mkdir -p $PACKAGE_DIR/build",
+				"curl -sLO https://github.com/WebAssembly/wasi-sdk/releases/download/wasi-sdk-25/wasi-sdk-25.0-x86_64-linux.tar.gz",
+				"tar -xf wasi-sdk-25.0-x86_64-linux.tar.gz",
+				"rm wasi-sdk-25.0-x86_64-linux.tar.gz",
+				"curl -sLO https://github.com/ada-url/ada/releases/download/v3.2.4/ada.cpp",
+				"curl -sLO https://github.com/ada-url/ada/releases/download/v3.2.4/ada.h",
+				"$PACKAGE_DIR/wasi-sdk-25.0-x86_64-linux/bin/wasm32-wasi-clang++ -O3 -fPIC -std=c++20 -c -o $PACKAGE_DIR/build/ada.o $PACKAGE_DIR/ada.cpp",
+				"$PACKAGE_DIR/wasi-sdk-25.0-x86_64-linux/bin/ar rcs $PACKAGE_DIR/build/libada.a $PACKAGE_DIR/build/ada.o",
+				"rm $PACKAGE_DIR/build/ada.o $PACKAGE_DIR/ada.cpp $PACKAGE_DIR/ada.h",
+				"rm -rf $PACKAGE_DIR/wasi-sdk-25.0-x86_64-linux"
+			],
+			"preBuildCommands-linux-aarch64": [
+				"mkdir -p $PACKAGE_DIR/build",
+				"curl -sLO https://github.com/WebAssembly/wasi-sdk/releases/download/wasi-sdk-25/wasi-sdk-25.0-arm64-linux.tar.gz",
+				"tar -xf wasi-sdk-25.0-arm64-linux.tar.gz",
+				"rm wasi-sdk-25.0-arm64-linux.tar.gz",
+				"curl -sLO https://github.com/ada-url/ada/releases/download/v3.2.4/ada.cpp",
+				"curl -sLO https://github.com/ada-url/ada/releases/download/v3.2.4/ada.h",
+				"$PACKAGE_DIR/wasi-sdk-25.0-arm64-linux/bin/wasm32-wasi-clang++ -O3 -fPIC -std=c++20 -c -o $PACKAGE_DIR/build/ada.o $PACKAGE_DIR/ada.cpp",
+				"$PACKAGE_DIR/wasi-sdk-25.0-arm64-linux/bin/ar rcs $PACKAGE_DIR/build/libada.a $PACKAGE_DIR/build/ada.o",
+				"rm $PACKAGE_DIR/build/ada.o $PACKAGE_DIR/ada.cpp $PACKAGE_DIR/ada.h",
+				"rm -rf $PACKAGE_DIR/wasi-sdk-25.0-arm64-linux"
+			],
+			"preBuildCommands-osx": [
+				"mkdir -p $PACKAGE_DIR/build",
+				"curl -sLO https://github.com/WebAssembly/wasi-sdk/releases/download/wasi-sdk-25/wasi-sdk-25.0-arm64-macos.tar.gz",
+				"tar -xf wasi-sdk-25.0-arm64-macos.tar.gz",
+				"rm wasi-sdk-25.0-arm64-macos.tar.gz",
+				"curl -sLO https://github.com/ada-url/ada/releases/download/v3.2.4/ada.cpp",
+				"curl -sLO https://github.com/ada-url/ada/releases/download/v3.2.4/ada.h",
+				"$PACKAGE_DIR/wasi-sdk-25.0-arm64-macos/bin/wasm32-wasi-clang++ -O3 -fPIC -std=c++20 -c -o $PACKAGE_DIR/build/ada.o $PACKAGE_DIR/ada.cpp",
+				"$PACKAGE_DIR/wasi-sdk-25.0-arm64-macos/bin/ar rcs $PACKAGE_DIR/build/libada.a $PACKAGE_DIR/build/ada.o",
+				"rm $PACKAGE_DIR/build/ada.o $PACKAGE_DIR/ada.cpp $PACKAGE_DIR/ada.h",
+				"rm -rf $PACKAGE_DIR/wasi-sdk-25.0-arm64-macos"
+			],
+			"preBuildCommands-windows": [
+				"powershell -Command \"mkdir -Force $PACKAGE_DIR\\build\"",
+				"powershell -Command \"(New-Object Net.WebClient).DownloadFile('https://github.com/WebAssembly/wasi-sdk/releases/download/wasi-sdk-25/wasi-sdk-25.0-x86_64-windows.tar.gz', 'wasi-sdk-25.0-x86_64-windows.tar.gz')\"",
+				"powershell -Command \"tar -xf wasi-sdk-25.0-x86_64-windows.tar.gz\"",
+				"powershell -Command \"Remove-Item wasi-sdk-25.0-x86_64-windows.tar.gz\"",
+				"powershell -Command \"(New-Object Net.WebClient).DownloadFile('https://github.com/ada-url/ada/releases/download/v3.2.4/ada.cpp', 'ada.cpp')\"",
+				"powershell -Command \"(New-Object Net.WebClient).DownloadFile('https://github.com/ada-url/ada/releases/download/v3.2.4/ada.h', 'ada.h')\"",
+				"$PACKAGE_DIR\\wasi-sdk-25.0-x86_64-windows\\bin\\wasm32-wasi-clang++ -O3 -fPIC -std=c++20 -c -o $PACKAGE_DIR/build/ada.o $PACKAGE_DIR/ada.cpp",
+				"$PACKAGE_DIR\\wasi-sdk-25.0-x86_64-windows\\bin\\ar rcs $PACKAGE_DIR/build/libada.a $PACKAGE_DIR/build/ada.o",
+				"rm $PACKAGE_DIR\\build\\ada.o $PACKAGE_DIR/ada.cpp $PACKAGE_DIR\\ada.h",
+				"rm -rf $PACKAGE_DIR/wasi-sdk-25.0-x86_64-windows"
+			]
 		},
 		{
 			"name": "unittest",
