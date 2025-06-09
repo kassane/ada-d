@@ -47,8 +47,8 @@ jobs:
         run: dub test
       - name: run Bench
         run: |
-          dub -b release -c benchmark
-          dub -b release -c benchmark -- $PWD/bench/urls.txt
+          dub -b release :benchmark
+          dub -b release :benchmark -- $PWD/bench/urls.txt
 
   build-wasm:
     strategy:
