@@ -63,7 +63,7 @@
 				"ada"
 			],
 			"lflags-posix": [
-				"-L$PACKAGE_DIR/build",
+				"-L$PACKAGE_DIR/build"
 			],
 			"lflags-windows": [
 				"/LIBPATH:$PACKAGE_DIR\\build"
