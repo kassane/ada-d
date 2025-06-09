@@ -9,11 +9,13 @@ It fully supports the relevant [Unicode Technical Standard](https://www.unicode.
 
 * [D](https://dlang.org/) toolchain
 * C++20 toolchain (system default)
+#### For Wasm32
+* [wasi-sdk](https://github.com/WebAssembly/wasi-sdk/releases) v25.0 or newer
 
 ## Usage
 
 See [here](source/ada/url/package.d) unittests for make a usage example.
-You can run it locally with `dub test` or `dub -c benchmark` to run benchmark (see: [here](bench/bench.d)).
+You can run it locally with `dub test` or `dub :benchmark` to run benchmark (see: [here](bench/bench.d)).
 Feel free to adjust it for exploring this project.
 
 ## Acknowledgements
