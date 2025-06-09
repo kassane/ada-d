@@ -107,17 +107,9 @@
 				"llvm-ar rcs $PACKAGE_DIR/build/libada.a $PACKAGE_DIR/build/ada.o",
 				"rm $PACKAGE_DIR/build/ada.o $PACKAGE_DIR/ada.cpp $PACKAGE_DIR/ada.h"
 			]
-		},
-		{
-			"name": "benchmark",
-			"sourceFiles": [
-				"bench/bench.d"
-			],
-			"libs": [
-				"ada"
-			],
-			"targetType": "executable",
-			"targetName": "bench"
 		}
+	],
+	"subPackages": [
+		"bench"
 	]
 }

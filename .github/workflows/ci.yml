@@ -75,7 +75,7 @@ jobs:
           compiler: ${{matrix.compiler}}
       - name: Install wasm32-unknown-wasi-sdk
         run: |
-          mkdir -p $GITHUB_WORKSPACE/build
+          mkdir -p build
           curl -sLO https://github.com/WebAssembly/wasi-sdk/releases/download/wasi-sdk-25/wasi-sdk-25.0-${{matrix.sdk_target}}.tar.gz
           tar -xf wasi-sdk-25.0-${{matrix.sdk_target}}.tar.gz
           rm wasi-sdk-25.0-${{matrix.sdk_target}}.tar.gz

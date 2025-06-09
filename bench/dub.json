@@ -1,0 +1,17 @@
+{
+    "name": "benchmark",
+    "sourceFiles": [
+        "bench.d"
+    ],
+    "dependencies": {
+        "ada-d": {
+            "path": ".."
+        }
+    },
+    "libs": [
+        "ada"
+    ],
+    "targetType": "executable",
+    "targetPath": "../build",
+    "targetName": "bench"
+}
