@@ -57,12 +57,15 @@ jobs:
           - os: ubuntu-latest 
             arch: amd64
             compiler: ldc-latest
+            sdk_target: x86_64-linux
           - os: ubuntu-24.04-arm 
             arch: arm64
             compiler: ldc-latest
+            sdk_target: arm64-linux
           - os: macos-latest
             arch: arm64
             compiler: ldc-latest
+            sdk_target: arm64-macos
       fail-fast: false
     runs-on: ${{matrix.os}}
     steps:
@@ -70,5 +73,12 @@ jobs:
       - uses: dlang-community/setup-dlang@v2
         with:
           compiler: ${{matrix.compiler}}
+      - name: Install wasm32-unknown-wasi-sdk
+        run: |
+          mkdir -p $GITHUB_WORKSPACE/build
+          curl -sLO https://github.com/WebAssembly/wasi-sdk/releases/download/wasi-sdk-25/wasi-sdk-25.0-${{matrix.sdk_target}}.tar.gz
+          tar -xf wasi-sdk-25.0-${{matrix.sdk_target}}.tar.gz
+          rm wasi-sdk-25.0-${{matrix.sdk_target}}.tar.gz
+          echo "$PWD/wasi-sdk-25.0-${{matrix.sdk_target}}" >> $GITHUB_PATH          
       - name: Build
         run: dub build -c wasm --arch wasm32-unknown-wasi -v
