@@ -1,6 +1,6 @@
 {
 	"name": "ada-d",
-	"version": "1.0.5",
+	"version": "1.0.7",
 	"authors": [
 		"Matheus Catarino França"
 	],
@@ -22,18 +22,16 @@
 			]
 		}
 	},
-	"lflags-linux": [
-		"-L$PACKAGE_DIR/build",
-		"-lstdc++"
+	"dflags-gdc": [
+		"-fpreview=dip1000",
+		"-fpreview=dip1008",
+		"-fpreview=fixAliasThis",
+		"-fpreview=in",
+		"-fpreview=rvaluerefparam",
+		"-fextern-std=c++20"
 	],
-	"lflags-osx": [
-		"-L$PACKAGE_DIR/build",
-		"-lc++"
-	],
-	"lflags-windows": [
-		"/LIBPATH:$PACKAGE_DIR\\build"
-	],
-	"dflags": [
+	"dflags-ldc": [
+		"--verrors-context",
 		"-preview=dip1000",
 		"-preview=dip1008",
 		"-preview=fixAliasThis",
@@ -41,69 +39,77 @@
 		"-preview=rvaluerefparam",
 		"-extern-std=c++20"
 	],
-	"dflags-ldc": [
-		"--verrors-context"
-	],
 	"dflags-dmd": [
-		"-verrors=context"
-	],
-	"preBuildCommands-linux": [
-		"mkdir -p $PACKAGE_DIR/build",
-		"curl -sLO https://github.com/ada-url/ada/releases/download/v3.2.4/ada.cpp",
-		"curl -sLO https://github.com/ada-url/ada/releases/download/v3.2.4/ada.h",
-		"g++ -O3 -fPIC -std=c++20 -c -o $PACKAGE_DIR/build/ada.o $PACKAGE_DIR/ada.cpp",
-		"ar rcs $PACKAGE_DIR/build/libada.a $PACKAGE_DIR/build/ada.o",
-		"rm $PACKAGE_DIR/build/ada.o $PACKAGE_DIR/ada.cpp $PACKAGE_DIR/ada.h"
-	],
-	"preBuildCommands-osx": [
-		"mkdir -p $PACKAGE_DIR/build",
-		"curl -sLO https://github.com/ada-url/ada/releases/download/v3.2.4/ada.cpp",
-		"curl -sLO https://github.com/ada-url/ada/releases/download/v3.2.4/ada.h",
-		"clang++ -O3 -fPIC -std=c++20 -c -o $PACKAGE_DIR/build/ada.o $PACKAGE_DIR/ada.cpp",
-		"ar rcs $PACKAGE_DIR/build/libada.a $PACKAGE_DIR/build/ada.o",
-		"rm $PACKAGE_DIR/build/ada.o $PACKAGE_DIR/ada.cpp $PACKAGE_DIR/ada.h"
-	],
-	"preBuildCommands-windows": [
-		"powershell -Command \"mkdir -Force $PACKAGE_DIR\\build\"",
-		"powershell -Command \"(New-Object Net.WebClient).DownloadFile('https://github.com/ada-url/ada/releases/download/v3.2.4/ada.cpp', 'ada.cpp')\"",
-		"powershell -Command \"(New-Object Net.WebClient).DownloadFile('https://github.com/ada-url/ada/releases/download/v3.2.4/ada.h', 'ada.h')\"",
-		"cl.exe /c /O2 /std:c++latest /Fo:$PACKAGE_DIR\\build\\ada.obj $PACKAGE_DIR\\ada.cpp /nologo",
-		"lib.exe /OUT:$PACKAGE_DIR\\build\\ada.lib $PACKAGE_DIR\\build\\ada.obj",
-		"powershell -Command \"Remove-Item $PACKAGE_DIR\\build\\ada.obj, $PACKAGE_DIR\\ada.cpp, $PACKAGE_DIR\\ada.h\""
+		"-verrors=context",
+		"-preview=dip1000",
+		"-preview=dip1008",
+		"-preview=fixAliasThis",
+		"-preview=in",
+		"-preview=rvaluerefparam",
+		"-extern-std=c++20"
 	],
 	"configurations": [
 		{
-			"name": "build-library",
-			"sourceFiles": [
-				"source/ada/url/package.d"
+			"name": "native",
+			"libs-osx": [
+				"ada",
+				"c++"
 			],
-			"libs": [
+			"libs-linux": [
+				"ada",
+				"stdc++"
+			],
+			"libs-windows": [
 				"ada"
 			],
-			"targetType": "library"
-		},
-		{
-			"name": "unittest",
-			"sourceFiles": [
-				"source/ada/url/package.d"
+			"lflags-posix": [
+				"-L$PACKAGE_DIR/build"
 			],
-			"libs": [
-				"ada"
+			"lflags-windows": [
+				"/LIBPATH:$PACKAGE_DIR\\build"
+			],
+			"targetType": "library",
+			"preBuildCommands-linux": [
+				"mkdir -p $PACKAGE_DIR/build",
+				"curl -sLO https://github.com/ada-url/ada/releases/download/v3.2.4/ada.cpp",
+				"curl -sLO https://github.com/ada-url/ada/releases/download/v3.2.4/ada.h",
+				"g++ -O3 -fPIC -std=c++20 -c -o $PACKAGE_DIR/build/ada.o $PACKAGE_DIR/ada.cpp",
+				"ar rcs $PACKAGE_DIR/build/libada.a $PACKAGE_DIR/build/ada.o",
+				"rm $PACKAGE_DIR/build/ada.o $PACKAGE_DIR/ada.cpp $PACKAGE_DIR/ada.h"
+			],
+			"preBuildCommands-osx": [
+				"mkdir -p $PACKAGE_DIR/build",
+				"curl -sLO https://github.com/ada-url/ada/releases/download/v3.2.4/ada.cpp",
+				"curl -sLO https://github.com/ada-url/ada/releases/download/v3.2.4/ada.h",
+				"clang++ -O3 -fPIC -std=c++20 -c -o $PACKAGE_DIR/build/ada.o $PACKAGE_DIR/ada.cpp",
+				"ar rcs $PACKAGE_DIR/build/libada.a $PACKAGE_DIR/build/ada.o",
+				"rm $PACKAGE_DIR/build/ada.o $PACKAGE_DIR/ada.cpp $PACKAGE_DIR/ada.h"
+			],
+			"preBuildCommands-windows": [
+				"powershell -Command \"mkdir -Force $PACKAGE_DIR\\build\"",
+				"powershell -Command \"(New-Object Net.WebClient).DownloadFile('https://github.com/ada-url/ada/releases/download/v3.2.4/ada.cpp', 'ada.cpp')\"",
+				"powershell -Command \"(New-Object Net.WebClient).DownloadFile('https://github.com/ada-url/ada/releases/download/v3.2.4/ada.h', 'ada.h')\"",
+				"cl.exe /c /O2 /std:c++latest /Fo:$PACKAGE_DIR\\build\\ada.obj $PACKAGE_DIR\\ada.cpp /nologo",
+				"lib.exe /OUT:$PACKAGE_DIR\\build\\ada.lib $PACKAGE_DIR\\build\\ada.obj",
+				"powershell -Command \"Remove-Item $PACKAGE_DIR\\build\\ada.obj, $PACKAGE_DIR\\ada.cpp, $PACKAGE_DIR\\ada.h\""
 			]
 		},
 		{
-			"name": "benchmark",
-			"importPaths": [
-				"source"
-			],
-			"sourceFiles": [
-				"bench/bench.d"
-			],
+			"name": "wasm",
 			"libs": [
 				"ada"
 			],
-			"targetType": "executable",
-			"targetName": "bench"
+			"targetType": "library",
+			"preBuildCommands": [
+				"curl -sLO https://github.com/ada-url/ada/releases/download/v3.2.4/ada.cpp",
+				"curl -sLO https://github.com/ada-url/ada/releases/download/v3.2.4/ada.h",
+				"wasm32-wasi-clang++ -O3 -fPIC -std=c++20 -c -o $PACKAGE_DIR/build/ada.o $PACKAGE_DIR/ada.cpp",
+				"llvm-ar rcs $PACKAGE_DIR/build/libada.a $PACKAGE_DIR/build/ada.o",
+				"rm $PACKAGE_DIR/build/ada.o $PACKAGE_DIR/ada.cpp $PACKAGE_DIR/ada.h"
+			]
 		}
+	],
+	"subPackages": [
+		"bench"
 	]
 }

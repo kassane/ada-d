@@ -1,5 +1,10 @@
 name: CI
-on: [push]
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+
 jobs:
   build:
     strategy:
@@ -42,5 +47,45 @@ jobs:
         run: dub test
       - name: run Bench
         run: |
-          dub -b release -c benchmark
-          dub -b release -c benchmark -- $PWD/bench/urls.txt
+          dub -b release :benchmark
+          dub -b release :benchmark -- $PWD/bench/urls.txt
+
+  build-wasm:
+    strategy:
+      matrix:
+        include:
+          - os: ubuntu-latest 
+            arch: amd64
+            compiler: ldc-latest
+            sdk_target: x86_64-linux
+            wasmtime_target: x86_64-linux
+          - os: ubuntu-24.04-arm 
+            arch: arm64
+            compiler: ldc-latest
+            sdk_target: arm64-linux
+            wasmtime_target: aarch64-linux
+          - os: macos-latest
+            arch: arm64
+            compiler: ldc-latest
+            sdk_target: arm64-macos
+            wasmtime_target: aarch64-macos
+      fail-fast: false
+    runs-on: ${{matrix.os}}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dlang-community/setup-dlang@v2
+        with:
+          compiler: ${{matrix.compiler}}
+      - name: Install wasm32-unknown-wasi-sdk
+        run: |
+          mkdir -p build
+          curl -sLO https://github.com/WebAssembly/wasi-sdk/releases/download/wasi-sdk-25/wasi-sdk-25.0-${{matrix.sdk_target}}.tar.gz
+          tar xvf wasi-sdk-25.0-${{matrix.sdk_target}}.tar.gz
+          rm wasi-sdk-25.0-${{matrix.sdk_target}}.tar.gz
+          echo `pwd`/wasi-sdk-25.0-${{matrix.sdk_target}}/bin >> $GITHUB_PATH
+          curl -sLO https://github.com/bytecodealliance/wasmtime/releases/download/v13.0.0/wasmtime-v13.0.0-${{matrix.wasmtime_target}}.tar.xz
+          tar xvf wasmtime-v13.0.0-${{matrix.wasmtime_target}}.tar.xz
+          rm wasmtime-v13.0.0-${{matrix.wasmtime_target}}.tar.xz
+          echo `pwd`/wasmtime-v13.0.0-${{matrix.wasmtime_target}} >> $GITHUB_PATH      
+      - name: Build
+        run: dub build -c wasm --arch wasm32-unknown-wasi -v
