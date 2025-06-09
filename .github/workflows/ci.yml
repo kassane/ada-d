@@ -79,6 +79,7 @@ jobs:
           curl -sLO https://github.com/WebAssembly/wasi-sdk/releases/download/wasi-sdk-25/wasi-sdk-25.0-${{matrix.sdk_target}}.tar.gz
           tar -xf wasi-sdk-25.0-${{matrix.sdk_target}}.tar.gz
           rm wasi-sdk-25.0-${{matrix.sdk_target}}.tar.gz
-          echo "$PWD/wasi-sdk-25.0-${{matrix.sdk_target}}" >> $GITHUB_PATH          
+          echo "$PWD/wasi-sdk-25.0-${{matrix.sdk_target}}/bin" >> $GITHUB_PATH
+          wasm32-wasi-clang -###      
       - name: Build
         run: dub build -c wasm --arch wasm32-unknown-wasi -v
